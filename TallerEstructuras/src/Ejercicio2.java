@@ -10,7 +10,7 @@ import java.util.Stack;
  *
  * @author laura
  */
-public class Ejer2 {
+public class Ejercicio2 {
     public static Stack<Integer> pila = new Stack();
     
     public static void llenarPila(){
