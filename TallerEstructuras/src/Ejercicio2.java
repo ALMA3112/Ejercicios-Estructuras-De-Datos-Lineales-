@@ -1,15 +1,6 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
-package com.mycompany.act5_pilas_listas;
 
 import java.util.Stack;
 
-/**
- *
- * @author laura
- */
 public class Ejercicio2 {
     public static Stack<Integer> pila = new Stack();
     
