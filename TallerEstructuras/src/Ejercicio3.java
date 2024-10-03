@@ -1,76 +1,81 @@
 import java.util.ArrayList;
-import java.util.List;
-import java.util.Random;
 import java.util.Stack;
 
-public class Ejercicio3 {
+public class Ejer3 {
+    public static Stack<Integer> establo2 = new Stack<>();
+    public static Stack<Integer> establo3 = new Stack<>();
+    public static ArrayList<Integer> establo1 = new ArrayList<>();
 
-    // Función recursiva para agregar novillos al establo #1
-    public static void agregarNovillosEstablo1(List<Integer> establo1, int minNovillos) {
-        if (establo1.size() >= minNovillos) {
-            return;
-        } else {
-            Random random = new Random();
-            int pesoNovillo = 150 + random.nextInt(351); // Generar peso aleatorio entre 150 y 500
-            establo1.add(pesoNovillo);
-            agregarNovillosEstablo1(establo1, minNovillos);
-        }
+    public static void ejecutar() {
+        llenarLista();
+        separarNovillos();
+        System.out.println("Establo 1: " + establo1.toString());
+        promedios();
     }
 
-    // Función para separar los novillos en establos #2 y #3 usando pilas (Stack)
-    public static void separarNovillos(List<Integer> establo1, Stack<Integer> establo2, Stack<Integer> establo3) {
-        for (int novillo : establo1) {
-            if (novillo >= 200 && novillo <= 350) {
-                establo2.push(novillo); // Añadir novillo a la pila del establo #2
-            } else if (novillo >= 351 && novillo <= 450) {
-                establo3.push(novillo); // Añadir novillo a la pila del establo #3
+    public static void llenarLista() {
+        for (int i = 0; i < 41; i++) {
+            establo1.add((int) (Math.random() * (500 - 150 + 1)) + 150);
+        }
+        System.out.println(establo1.toString());
+    }
+
+    public static void separarNovillos() {
+        int i = 0;
+        while (i < establo1.size()) {
+            int novillo = establo1.get(i);
+            if (200 <= novillo && novillo <= 350) {
+                establo2.add(novillo);
+                establo1.remove(i); 
+            } else if (351 <= novillo && novillo <= 450) {
+                establo3.add(novillo);
+                establo1.remove(i); 
+            } else {
+                i++; // Solo incrementar si no se eliminó un elemento
             }
         }
     }
 
-    // Función para calcular el promedio de peso de los novillos en un establo
-    public static double promedioPeso(List<Integer> establo) {
-        if (establo.size() == 0) {
-            return 0;
+
+    public static void promedios() {
+        if (establo1.isEmpty()) {
+            System.out.println("Establo 1: vacío");
+        } else {
+            double suma = 0;
+            for (int peso : establo1) {
+                suma += peso;
+            }
+            double promedioLista = suma / establo1.size();
+            System.out.println("Promedio pesos establo 1: " + promedioLista);
+            System.out.println("Número de animales: " + establo1.size());
         }
-        int suma = 0;
-        for (int novillo : establo) {
-            suma += novillo;
+
+
+        if (establo2.isEmpty()) {
+            System.out.println("Establo 2: vacío");
+        } else {
+            double suma = 0;
+            int tam = establo2.size();
+            while (!establo2.isEmpty()) {
+                suma += establo2.pop(); 
+            }
+            double promedioEstablo2 = suma / tam;
+            System.out.println("Promedio pesos establo 2: " + promedioEstablo2);
+            System.out.println("Número de animales: " + tam);
         }
-        return (double) suma / establo.size();
-    }
 
-    public static double promedioPeso(Stack<Integer> establo) {
-        if (establo.size() == 0) {
-            return 0;
+
+        if (establo3.isEmpty()) {
+            System.out.println("Establo 3: vacío");
+        } else {
+            double suma = 0;
+            int tam3 = establo3.size();
+            while (!establo3.isEmpty()) {
+                suma += establo3.pop(); 
+            }
+            double promedioEstablo3 = suma / tam3;
+            System.out.println("Promedio pesos establo 3: " + promedioEstablo3);
+            System.out.println("Número de animales: " + tam3);
         }
-        int suma = 0;
-        for (int novillo : establo) {
-            suma += novillo;
-        }
-        return (double) suma / establo.size();
-    }
-
-    public static void main(String[] args) {
-        // 1. Guardar el rebaño en el establo #1
-        List<Integer> establo1 = new ArrayList<>();
-        agregarNovillosEstablo1(establo1, 40); // Añadir al menos 40 novillos al establo #1
-
-        // Mostrar el rebaño inicial
-        System.out.println("Rebaño en el establo #1: " + establo1);
-        System.out.println("Total de novillos en el establo #1: " + establo1.size());
-        System.out.printf("Promedio de peso en el establo #1: %.2f kilos\n", promedioPeso(establo1));
-
-        // 2. Separar los novillos en los establos #2 y #3
-        Stack<Integer> establo2 = new Stack<>();
-        Stack<Integer> establo3 = new Stack<>();
-        separarNovillos(establo1, establo2, establo3);
-
-        // 3. Mostrar la información de salida
-        System.out.println("\nTotal de novillos en el establo #2: " + establo2.size());
-        System.out.printf("Promedio de peso en el establo #2: %.2f kilos\n", promedioPeso(establo2));
-
-        System.out.println("\nTotal de novillos en el establo #3: " + establo3.size());
-        System.out.printf("Promedio de peso en el establo #3: %.2f kilos\n", promedioPeso(establo3));
     }
 }
